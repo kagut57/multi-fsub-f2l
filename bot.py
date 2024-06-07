@@ -17,7 +17,7 @@ class UserBot(Client):
             name="UserBot",
             api_hash=USER_API_HASH,
             api_id=USER_APP_ID,
-            session_string=USER_SESSION  # Assuming USER_SESSION is a session string
+            session_string=USER_SESSION
         )
 
 class Bot(Client):
