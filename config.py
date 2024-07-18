@@ -15,13 +15,13 @@ APP_ID = int(os.environ.get("APP_ID", ""))
 API_HASH = os.environ.get("API_HASH", "")
 
 #Uer String
-USER_SESSION = os.environ.get("USER_SESSION", "")
+#USER_SESSION = os.environ.get("USER_SESSION", "")
 
 #Your API ID from my.telegram.org
-USER_APP_ID = int(os.environ.get("USER_APP_ID", ""))
+#USER_APP_ID = int(os.environ.get("USER_APP_ID", ""))
 
 #Your API Hash from my.telegram.org
-USER_API_HASH = os.environ.get("USER_API_HASH", "")
+#USER_API_HASH = os.environ.get("USER_API_HASH", "")
 
 #Your db channel Id
 CHANNEL_ID = int(os.environ.get("CHANNEL_ID", ""))
