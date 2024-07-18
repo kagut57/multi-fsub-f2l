@@ -7,7 +7,7 @@ from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, 
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
 
 from bot import Bot, UserBot as Ubot
-from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, DELAY #, REQ_CHAT
+from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, DELAY
 from helper_func import subscribed, encode, decode, get_messages
 from database.database import add_user, del_user, full_userbase, present_user, fsub
 
@@ -155,18 +155,19 @@ async def not_joined(client: Client, message: Message):
         try:
             invite_link = await client.create_chat_invite_link(chat_id=force_sub_channel)
             buttons.append(
-                [
-                    InlineKeyboardButton(
-                        f"Join Channel {idx}",
-                        url=invite_link.invite_link
-                    )
-                ]
+                InlineKeyboardButton(
+                    f"Join Channel {idx}",
+                    url=invite_link.invite_link
+                )
             )
         except Exception as e:
             print(f"Error creating invite link for channel {force_sub_channel}: {e}")
 
+    # Group buttons into rows of two
+    button_rows = [buttons[i:i + 2] for i in range(0, len(buttons), 2)]
+
     try:
-        buttons.append(
+        button_rows.append(
             [
                 InlineKeyboardButton(
                     text='Try Again',
@@ -185,7 +186,7 @@ async def not_joined(client: Client, message: Message):
             mention=message.from_user.mention,
             id=message.from_user.id
         ),
-        reply_markup=InlineKeyboardMarkup(buttons),
+        reply_markup=InlineKeyboardMarkup(button_rows),
         quote=True,
         disable_web_page_preview=True
     )
@@ -302,10 +303,3 @@ async def show_fsub(client, message):
             await message.reply("No subscribed channels found.")
     else:
         await message.reply("No subscribed channel IDs found.")
-
-#@Ubot.on_chat_join_request(filters.chat(REQ_CHAT))
-#async def join_reqs(client: Client, join_req: ChatJoinRequest):
-#    try:
-    #    await client.approve_chat_join_request(chat_id=join_req.chat.id, user_id=join_req.from_user.id)
-  #  except Exception as e:
-       # print(f"Failed to approve join request: {e}")
